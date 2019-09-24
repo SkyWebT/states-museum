@@ -1,138 +1,81 @@
-import React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
-
-import Todo from '../Todo';
-import { T_Store, T_Todo } from '../types';
-
-// state
-interface State {
-  input: string;
-  todos: T_Todo[];
-}
-const initialState: State = {
-  input: '',
-  todos: [],
-};
-
+import { createStore, AnyAction } from "redux";
+import {  Provider } from 'react-redux';
+import { T_Todo, T_Store_Redux, UpdateInputAction, AddTodoAction, TickTodoAction } from "../types";
+import React from "react";
+import Todo from "../Todo-Redux";
 // actions enums
 
-export const UPDATE_INPUT = 'UPDATE_INPUT';
-export const ADD_TODO = 'ADD_TODO';
-export const TICK_TODO = 'TICK_TODO';
+export const types = {
+  UPDATE_INPUT: "UPDATE_INPUT",
+  ADD_TODO: "ADD_TODO",
+  TICK_TODO: "TICK_TODO"
+};
 
-// actions
-
-interface UpdateInputAction {
-  type: typeof UPDATE_INPUT;
-  payload: string;
-}
-
-interface AddTodoAction {
-  type: typeof ADD_TODO;
-  payload: T_Todo;
-}
-
-interface TickTodoAction {
-  type: typeof TICK_TODO;
-  payload: T_Todo;
-}
-
-type Actions = UpdateInputAction | AddTodoAction | TickTodoAction;
-
+const initialState: T_Store_Redux = {
+  input: "",
+  todos: []
+};
 // action creators
 
-const updateInputAction = (payload: string): UpdateInputAction => {
+const updateInputAction = (payload: string): AnyAction => {
   return {
-    type: UPDATE_INPUT,
-    payload,
+    type: types.UPDATE_INPUT,
+    payload
   };
 };
-const addTodoAction = (payload: T_Todo): AddTodoAction => {
+const addTodoAction = (payload: T_Todo): AnyAction => {
   return {
-    type: ADD_TODO,
-    payload,
+    type: types.ADD_TODO,
+    payload
   };
 };
-const tickTodoAction = (payload: T_Todo): TickTodoAction => {
+const tickTodoAction = (payload: T_Todo): AnyAction => {
   return {
-    type: TICK_TODO,
-    payload,
+    type: types.TICK_TODO,
+    payload
   };
 };
 
 // reducers
-const reducer = (state: State = initialState, action: Actions): State => {
+const reducer = (state: T_Store_Redux = initialState, action: AnyAction): T_Store_Redux => {
   switch (action.type) {
-    case UPDATE_INPUT:
+    case types.UPDATE_INPUT:
       return {
         ...state,
-        input: action.payload,
+        input: (action as UpdateInputAction).payload
       };
-    case ADD_TODO:
+    case types.ADD_TODO:
       return {
         ...state,
-        input: '',
-        todos: [...state.todos, action.payload],
+        input: "",
+        todos: [...state.todos, (action as AddTodoAction).payload]
       };
-    case TICK_TODO:
+    case types.TICK_TODO:
       return {
         ...state,
         todos: state.todos.map(t => {
-          if (action.payload.id === t.id) {
+          if ((action as TickTodoAction).payload.id === t.id) {
             return { ...t, done: !t.done };
           } else return t;
-        }),
+        })
       };
     default:
       return state;
   }
 };
 
-// store
-const store = createStore(reducer);
+// store 
+export const store = createStore(reducer);
 
-// connect
-
-interface Props {
-  input: string;
-  todos: T_Todo[];
-  updateInputAction: typeof updateInputAction;
-  addTodoAction: typeof addTodoAction;
-  tickTodoAction: typeof tickTodoAction;
-}
-const ReduxTodo_: React.FC<Props> = ({
-  input,
-  todos,
+export default {
+  types,
   updateInputAction,
   addTodoAction,
-  tickTodoAction,
-}) => {
-  const store = {
-    input,
-    todos,
-    setInput: updateInputAction,
-    addTodo: addTodoAction,
-    tickTodo: tickTodoAction,
-  } as T_Store;
-  return <Todo store={store} />;
+  tickTodoAction
 };
-const mapStateToProps = (state: State) => {
-  return state;
-};
-const con = connect(
-  mapStateToProps,
-  {
-    updateInputAction,
-    addTodoAction,
-    tickTodoAction,
-  }
-);
 
-const ReduxTodo = con(ReduxTodo_);
-
-export default () => (
+export const ElementConstructor = () => (
   <Provider store={store}>
-    <ReduxTodo />
+    <Todo />
   </Provider>
 );
