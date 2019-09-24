@@ -6,10 +6,10 @@ import { Box, Flex, Heading } from 'rebass';
 
 import preset from '@rebass/preset-material';
 
-import Context from './context';
-import Mobx from './mobx';
-import Overmind from './overmind';
-import Zustand from './zustand';
+import Context from './candidates/context';
+import Mobx from './candidates/mobx';
+import Overmind from './candidates/overmind';
+import Zustand from './candidates/zustand';
 
 function App() {
   return (
