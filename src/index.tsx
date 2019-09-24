@@ -9,6 +9,7 @@ import preset from '@rebass/preset-material';
 import Context from './candidates/context';
 import Mobx from './candidates/mobx';
 import Overmind from './candidates/overmind';
+import Redux from './candidates/redux';
 import Zustand from './candidates/zustand';
 
 function App() {
@@ -17,12 +18,10 @@ function App() {
       <Flex mx={-2}>
         <Box width={1 / 2} px={2}>
           <Heading>Mobx</Heading>
-
           <Mobx />
         </Box>
         <Box width={1 / 2} px={2}>
           <Heading>Zustand</Heading>
-
           <Zustand />
         </Box>
       </Flex>
@@ -33,8 +32,17 @@ function App() {
         </Box>
         <Box width={1 / 2} px={2}>
           <Heading>Context</Heading>
-
           <Context />
+        </Box>
+      </Flex>
+      <Flex mx={-2}>
+        <Box width={1 / 2} px={2}>
+          <Heading>Redux</Heading>
+          <Redux />
+        </Box>
+        <Box width={1 / 2} px={2}>
+          <Heading></Heading>
+     
         </Box>
       </Flex>
     </Box>

@@ -5,8 +5,6 @@ import React from 'react';
 import Todo from '../Todo';
 import { T_Todo } from '../types';
 
-const ObserverTodo = observer(Todo);
-
 class TodoStore {
   @observable input = "";
   @observable todos: T_Todo[] = [];
@@ -26,6 +24,8 @@ class TodoStore {
   }
 }
 const store = new TodoStore();
+
+const ObserverTodo = observer(Todo);
 
 const MobxTodo = () => {
   return <ObserverTodo store={store} />;
