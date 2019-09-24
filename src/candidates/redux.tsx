@@ -42,19 +42,19 @@ type Actions = UpdateInputAction | AddTodoAction | TickTodoAction;
 
 // action creators
 
-const updateInputAction = (payload: string) => {
+const updateInputAction = (payload: string): UpdateInputAction => {
   return {
     type: UPDATE_INPUT,
     payload,
   };
 };
-const addTodoAction = (payload: T_Todo) => {
+const addTodoAction = (payload: T_Todo): AddTodoAction => {
   return {
     type: ADD_TODO,
     payload,
   };
 };
-const tickTodoAction = (payload: T_Todo) => {
+const tickTodoAction = (payload: T_Todo): TickTodoAction => {
   return {
     type: TICK_TODO,
     payload,
@@ -62,7 +62,7 @@ const tickTodoAction = (payload: T_Todo) => {
 };
 
 // reducers
-const reducer = (state: State = initialState, action: Actions) => {
+const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
     case UPDATE_INPUT:
       return {
