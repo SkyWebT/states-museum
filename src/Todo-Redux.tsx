@@ -1,13 +1,12 @@
 import React from "react";
 import { Box, Button } from "rebass";
-import { Dispatch } from "redux";
-
+import {  Provider } from 'react-redux';
 import { Checkbox, Input, Label } from "@rebass/forms";
 
 import { BorderBox } from "./primitives";
-import { T_Store, T_Todo } from "./types";
+import { T_Store } from "./types";
 import { connect } from "react-redux";
-import Actions from "./candidates/redux";
+import  {store, updateInput, addTodo, tickTodo } from "./candidates/redux";
 
 const Todo: React.FC<{ store: T_Store; updateInput: any; addTodo: any; tickTodo: any }> = ({
   store,
@@ -49,14 +48,26 @@ const mapStateToProps = (state: T_Store) => {
     store: state
   };
 };
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    updateInput: (input: string) => dispatch(Actions.updateInputAction(input)),
-    addTodo: (todo: T_Todo) => dispatch(Actions.addTodoAction(todo)),
-    tickTodo: (todo: T_Todo) => dispatch(Actions.tickTodoAction(todo))
-  };
+const actionCreators =  {
+  updateInput,
+  addTodo,
+  tickTodo,
 };
-export default connect(
+const ConnectedTodo = connect(
   mapStateToProps,
-  mapDispatchToProps
+  actionCreators
 )(Todo);
+export default ConnectedTodo;
+
+
+
+
+
+
+
+// Helper to return Redux element
+export const ElementConstructor = () => (
+  <Provider store={store}>
+    <ConnectedTodo />
+  </Provider>
+);

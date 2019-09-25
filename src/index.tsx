@@ -9,7 +9,7 @@ import preset from '@rebass/preset-material';
 import Context from './candidates/context';
 import Mobx from './candidates/mobx';
 import Overmind from './candidates/overmind';
-import {ElementConstructor as ReduxElement } from './candidates/redux';
+import {ElementConstructor as ReduxElement } from './Todo-Redux';
 import Zustand from './candidates/zustand';
 
 function App() {

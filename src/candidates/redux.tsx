@@ -1,8 +1,7 @@
 import { createStore, AnyAction } from "redux";
-import {  Provider } from 'react-redux';
+
 import { T_Todo, T_Store_Redux, UpdateInputAction, AddTodoAction, TickTodoAction } from "../types";
 import React from "react";
-import Todo from "../Todo-Redux";
 // actions enums
 
 export const types = {
@@ -17,19 +16,19 @@ const initialState: T_Store_Redux = {
 };
 // action creators
 
-const updateInputAction = (payload: string): AnyAction => {
+export const updateInput = (payload: string): UpdateInputAction => {
   return {
     type: types.UPDATE_INPUT,
     payload
   };
 };
-const addTodoAction = (payload: T_Todo): AnyAction => {
+export const addTodo = (payload: T_Todo): AddTodoAction => {
   return {
     type: types.ADD_TODO,
     payload
   };
 };
-const tickTodoAction = (payload: T_Todo): AnyAction => {
+export const tickTodo = (payload: T_Todo): TickTodoAction => {
   return {
     type: types.TICK_TODO,
     payload
@@ -42,19 +41,19 @@ const reducer = (state: T_Store_Redux = initialState, action: AnyAction): T_Stor
     case types.UPDATE_INPUT:
       return {
         ...state,
-        input: (action as UpdateInputAction).payload
+        input: action.payload
       };
     case types.ADD_TODO:
       return {
         ...state,
         input: "",
-        todos: [...state.todos, (action as AddTodoAction).payload]
+        todos: [...state.todos, action.payload]
       };
     case types.TICK_TODO:
       return {
         ...state,
         todos: state.todos.map(t => {
-          if ((action as TickTodoAction).payload.id === t.id) {
+          if (action.payload.id === t.id) {
             return { ...t, done: !t.done };
           } else return t;
         })
@@ -69,13 +68,9 @@ export const store = createStore(reducer);
 
 export default {
   types,
-  updateInputAction,
-  addTodoAction,
-  tickTodoAction
+  updateInput,
+  addTodo,
+  tickTodo
 };
 
-export const ElementConstructor = () => (
-  <Provider store={store}>
-    <Todo />
-  </Provider>
-);
+
