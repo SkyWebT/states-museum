@@ -1,4 +1,4 @@
-import { AnyAction } from 'redux';
+import { AnyAction, compose } from 'redux';
 
 export interface T_Todo {
   text: string;
@@ -32,4 +32,10 @@ export interface AddTodoAction extends AnyAction {
 export interface TickTodoAction extends AnyAction {
   type: string;
   payload: T_Todo;
+}
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
 }

@@ -1,4 +1,4 @@
-import { createStore, AnyAction } from "redux";
+import { createStore, AnyAction, compose } from "redux";
 
 import { T_Todo, T_Store_Redux, UpdateInputAction, AddTodoAction, TickTodoAction } from "../types";
 import React from "react";
@@ -64,7 +64,9 @@ const reducer = (state: T_Store_Redux = initialState, action: AnyAction): T_Stor
 };
 
 // store 
-export const store = createStore(reducer);
+export const store = createStore(reducer,
+  window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] && window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']()
+  );
 
 export default {
   types,
