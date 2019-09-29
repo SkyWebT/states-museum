@@ -18,21 +18,6 @@ export interface T_Store_Redux {
   todos: T_Todo[];
 }
 
-export interface UpdateInputAction extends AnyAction {
-  type: string;
-  payload: string;
-}
-
-export interface AddTodoAction extends AnyAction {
-  type: string;
-  payload: T_Todo;
-}
-
-export interface TickTodoAction extends AnyAction {
-  type: string;
-  payload: T_Todo;
-}
-
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

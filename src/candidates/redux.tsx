@@ -1,6 +1,6 @@
 import { createStore, AnyAction, compose } from "redux";
 
-import { T_Todo, T_Store_Redux, AddTodoAction, TickTodoAction } from "../types";
+import { T_Todo, T_Store_Redux } from "../types";
 import React from "react";
 // actions enums
 
@@ -15,13 +15,13 @@ const initialState: T_Store_Redux = {
 };
 // action creators
 
-export const addTodo = (payload: T_Todo): AddTodoAction => {
+export const addTodo = (payload: T_Todo): AnyAction => {
   return {
     type: types.ADD_TODO,
     payload
   };
 };
-export const tickTodo = (payload: T_Todo): TickTodoAction => {
+export const tickTodo = (payload: T_Todo): AnyAction => {
   return {
     type: types.TICK_TODO,
     payload
