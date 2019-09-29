@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button } from "rebass";
 import {  Provider } from 'react-redux';
 import { Checkbox, Input, Label } from "@rebass/forms";
@@ -6,25 +6,26 @@ import { Checkbox, Input, Label } from "@rebass/forms";
 import { BorderBox } from "./primitives";
 import { T_Store } from "./types";
 import { connect } from "react-redux";
-import  {store, updateInput, addTodo, tickTodo } from "./candidates/redux";
+import  {store, addTodo, tickTodo } from "./candidates/redux";
 
-const Todo: React.FC<{ store: T_Store; updateInput: any; addTodo: any; tickTodo: any }> = ({
+const Todo: React.FC<{ store: T_Store; addTodo: any; tickTodo: any }> = ({
   store,
-  updateInput,
   addTodo,
   tickTodo
 }) => {
+  const [input, updateInput] = useState("");
   const handleAddTodo = () => {
     addTodo({
-      text: store.input,
+      text: input,
       done: false,
       id: Date.now()
     });
+    updateInput("");
   };
   return (
     <BorderBox>
       <Input
-        value={store.input}
+        value={input}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateInput(e.target.value)}
       />
       <Button onClick={handleAddTodo}>Add</Button>
@@ -49,7 +50,6 @@ const mapStateToProps = (state: T_Store) => {
   };
 };
 const actionCreators =  {
-  updateInput,
   addTodo,
   tickTodo,
 };
@@ -58,12 +58,6 @@ const ConnectedTodo = connect(
   actionCreators
 )(Todo);
 export default ConnectedTodo;
-
-
-
-
-
-
 
 // Helper to return Redux element
 export const ElementConstructor = () => (

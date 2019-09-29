@@ -15,7 +15,6 @@ export interface T_Store {
 }
 
 export interface T_Store_Redux {
-  input: string;
   todos: T_Todo[];
 }
 
