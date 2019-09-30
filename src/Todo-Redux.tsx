@@ -12,21 +12,17 @@ const Todo: React.FC = () => {
   const dispatch = useDispatch();
   const store = useSelector((state: T_Store_Redux) => state);
 
-  const handleTickTodo = useCallback((payload: T_Todo) => dispatch(tickTodo(payload)), [dispatch]);
-  const handleAddTodo = useCallback(
-    (text: string, done: boolean, id: number) => { dispatch(addTodo({text,done,id})); updateInput("");},
-    [dispatch]
-  );
+  const handleAddTodo = () => { dispatch(addTodo({text: input,done: false,id: Date.now()})); updateInput("") };
 
   return (
     <BorderBox>
       <Input value={input} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateInput(e.target.value)} />
-      <Button onClick={() => handleAddTodo(input, false, Date.now())}>Add</Button>
+      <Button onClick={handleAddTodo}>Add</Button>
 
       {store.todos.map(todo => (
         <Box key={todo.id}>
           <Label p={1}>
-            <Checkbox checked={todo.done} onChange={() => handleTickTodo(todo)} />
+            <Checkbox checked={todo.done} onChange={() => dispatch(tickTodo(todo))} />
             {todo.text}
           </Label>
         </Box>
